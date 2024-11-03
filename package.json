@@ -10,7 +10,7 @@
   "devDependencies": {
     "prettier": "^3.2.5",
     "turbo": "^2.2.3",
-    "typescript": "5.5.4"
+    "typescript": "^5.5.4"
   },
   "engines": {
     "node": ">=18"
@@ -19,5 +19,11 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.8.7",
+    "express": "^4.21.1",
+    "ts-node": "^10.9.2"
+  }
 }
