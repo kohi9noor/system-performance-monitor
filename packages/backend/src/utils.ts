@@ -4,18 +4,23 @@ import io from "socket.io-client";
 let socket = io("http://127.0.0.1:3000/");
 
 socket.on("connect", () => {
-  // client auth
   socket.emit("clinetAuth", "iakjdkhjaskdhjaihs23232349");
 
-  // start sending over data on interval
   const systemPerformance = performanceInfo();
-  setInterval(() => {
+  const intervalId = setInterval(() => {
     socket.emit("perData", systemPerformance);
   }, 1000);
+
+  socket.on("getData", (data) => {
+    console.log("real time data:", data);
+  });
+
+  socket.on("disconnect", () => {
+    clearInterval(intervalId);
+  });
 });
 
 export function performanceInfo() {
-  // OS Type
   const osType: string = os.type() === "Darwin" ? "Mac" : os.type();
 
   const upTime: number = os.uptime();
