@@ -1,4 +1,18 @@
 import os from "os";
+import io from "socket.io-client";
+
+let socket = io("http://127.0.0.1:3000/");
+
+socket.on("connect", () => {
+  // client auth
+  socket.emit("clinetAuth", "iakjdkhjaskdhjaihs23232349");
+
+  // start sending over data on interval
+  const systemPerformance = performanceInfo();
+  setInterval(() => {
+    socket.emit("perData", systemPerformance);
+  }, 1000);
+});
 
 export function performanceInfo() {
   // OS Type
@@ -65,9 +79,3 @@ export function performanceInfo() {
     },
   };
 }
-
-const systemPerformance = performanceInfo();
-
-setInterval(() => {
-  console.log("Latest CPU Load:", systemPerformance.cpuLoad.toFixed(2));
-}, 2000);
