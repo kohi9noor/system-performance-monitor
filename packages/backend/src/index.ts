@@ -42,13 +42,19 @@ if (cluster.isMaster) {
   io.on("connection", (socket: Socket) => {
     console.log("Client connected");
 
-    socket.on("perData", (data) => {
-      async function check() {
-        if (data) {
-          socket.emit("getData", data);
-        }
-      }
-      check();
+    let setData: any;
+    console.log(setData);
+
+    socket.on("perData", async (data) => {
+      setData = data;
+    });
+
+    setInterval(() => {
+      socket.emit("getData", setData ? setData : "kucbhi");
+    }, 2000);
+
+    socket.on("huehue", (data) => {
+      console.log(data);
     });
   });
 

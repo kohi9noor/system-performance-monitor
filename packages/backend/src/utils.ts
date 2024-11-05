@@ -4,12 +4,10 @@ import io from "socket.io-client";
 let socket = io("http://127.0.0.1:3000/");
 
 socket.on("connect", () => {
-  socket.emit("clinetAuth", "iakjdkhjaskdhjaihs23232349");
-
   const systemPerformance = performanceInfo();
   const intervalId = setInterval(() => {
     socket.emit("perData", systemPerformance);
-  }, 1000);
+  }, 2000);
 
   socket.on("getData", (data) => {
     console.log("real time data:", data);
