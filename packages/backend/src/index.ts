@@ -22,6 +22,8 @@ if (cluster.isMaster) {
     cluster.fork();
   });
 } else {
+  const connectedPeers: string[] = [];
+
   const pubClient = new Redis({ host: "localhost", port: 6379 });
   const subClient = pubClient.duplicate();
 
@@ -46,15 +48,7 @@ if (cluster.isMaster) {
     console.log(setData);
 
     socket.on("perData", async (data) => {
-      setData = data;
-    });
-
-    setInterval(() => {
-      socket.emit("getData", setData ? setData : "kucbhi");
-    }, 2000);
-
-    socket.on("huehue", (data) => {
-      console.log(data);
+      io.emit("getData", data);
     });
   });
 
